@@ -12,4 +12,8 @@ public class Schedule {
     public ArrayList<Lesson> getAllLesson(){
         return lessons;
     }
+
+    public void setLessons(ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
+    }
 }

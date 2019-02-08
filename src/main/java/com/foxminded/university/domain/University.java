@@ -10,19 +10,18 @@ public class University {
     private ArrayList<Lecturer> lecturers = new ArrayList<>();
     private ArrayList<Lesson> lessons = new ArrayList<>();
 
-    public Student findStudent(String studentName, String studentLastName) {
-        for (Student student : students) {
-            if (student.getName().equals(studentName) && student.getLastName().equals(studentLastName)) {
-                return student;
-            }
-        }
-        return null;
+    public Student findStudent(Student searchingStudent) {
+        return (Student) findPerson(searchingStudent, students);
     }
 
-    public Lecturer findLecturer(String lecturerName, String lecturerLastName) {
-        for (Lecturer lecturer : lecturers) {
-            if (lecturer.getName().equals(lecturerName) && lecturer.getLastName().equals(lecturerLastName)) {
-                return lecturer;
+    public Lecturer findLecturer(Lecturer searchingLecturer) {
+        return (Lecturer) findPerson(searchingLecturer, lecturers);
+    }
+
+    private Person findPerson(Person searchingPerson, ArrayList<? extends Person> list) {
+        for (Person person : list) {
+            if (person.equals(searchingPerson)) {
+                return person;
             }
         }
         return null;
@@ -44,14 +43,14 @@ public class University {
     }
 
     public void employLecturer(Lecturer lecturer) {
-        if (lecturers.contains(lecturer)) {
+        if (!lecturers.contains(lecturer)) {
             lecturers.add(lecturer);
         }
 
     }
 
     public void sackLecturer(Lecturer lecturer) {
-        for (Lesson lesson : lessons) {
+        for (Lesson lesson : new ArrayList<Lesson>(lessons)) {
             if (lesson.getLecturer().equals(lecturer)) {
                 lessons.remove(lesson);
             }
@@ -61,24 +60,23 @@ public class University {
 
     public void addLesson(Lesson addingLesson) {
         if (lessons.size() > 0) {
-            for (int i = 0; i < lessons.size(); i++) {
-                if (!isSameClassroomAndTimeLesson(lessons.get(i), addingLesson)) {
-                    if (!isSameLecturerAndTimeLesson(lessons.get(i), addingLesson)) {
-                        lessons.add(addingLesson);
-                        break;
-                    }
+            for (Lesson lesson : lessons) {
+                if (isLessonHasSameClassroomAndTimeLesson(lesson, addingLesson) ||
+                        isLessonHasSameLecturerAndTimeLesson(lesson, addingLesson)) {
+                    return;
                 }
             }
+            lessons.add(addingLesson);
         } else {
             lessons.add(addingLesson);
         }
     }
 
-    private boolean isSameClassroomAndTimeLesson(Lesson lesson, Lesson addingLesson) {
+    private boolean isLessonHasSameClassroomAndTimeLesson(Lesson lesson, Lesson addingLesson) {
         return lesson.getClassroom().equals(addingLesson.getClassroom()) && lesson.getTimePeriod().equals(addingLesson.getTimePeriod());
     }
 
-    private boolean isSameLecturerAndTimeLesson(Lesson lesson, Lesson addingLesson) {
+    private boolean isLessonHasSameLecturerAndTimeLesson(Lesson lesson, Lesson addingLesson) {
         return lesson.getLecturer().equals(addingLesson.getLecturer()) && lesson.getTimePeriod().equals(addingLesson.getTimePeriod());
     }
 
@@ -88,36 +86,42 @@ public class University {
 
     public Schedule getSchedule(Date date, Person person) {
         Schedule schedule = new Schedule();
+        Date lessonDate;
         for (Lesson lesson : lessons) {
-            if (isSameDate(date, lesson.getTimePeriod().getStartTime())) {
+            lessonDate = removeTimeInDate(lesson.getTimePeriod().getStartTime());
+            if (lessonDate.equals(date)) {
                 addLessonToSchedule(lesson, person, schedule);
             }
         }
         return schedule;
     }
 
-    private boolean isSameDate(Date firstDate, Date secondDate) {
-        Calendar searchingDate = Calendar.getInstance();
-        searchingDate.setTime(firstDate);
-        Calendar lessonTime = Calendar.getInstance();
-        lessonTime.setTime(secondDate);
-        return searchingDate.get(Calendar.DAY_OF_MONTH) == lessonTime.get(Calendar.DAY_OF_MONTH) &&
-                searchingDate.get(Calendar.MONTH) == lessonTime.get(Calendar.MONTH) &&
-                searchingDate.get(Calendar.YEAR) == lessonTime.get(Calendar.YEAR);
+    private Date removeTimeInDate(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 
     public Schedule getSchedule(TimePeriod timePeriod, Person person) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(timePeriod.getEndTine());
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
+        Date endTimePeriod = calendar.getTime();
         Schedule schedule = new Schedule();
         for (Lesson lesson : lessons) {
             if (lesson.getTimePeriod().getStartTime().after(timePeriod.getStartTime()) &&
-                    lesson.getTimePeriod().getStartTime().before(timePeriod.getEndTine())) {
-                addLessonToSchedule(lesson, person, schedule);
+                    lesson.getTimePeriod().getStartTime().before(endTimePeriod)) {
+                schedule = addLessonToSchedule(lesson, person, schedule);
             }
         }
         return schedule;
     }
 
-    private void addLessonToSchedule(Lesson lesson, Person person, Schedule schedule) {
+    private Schedule addLessonToSchedule(Lesson lesson, Person person, Schedule schedule) {
         if (person instanceof Student) {
             if (lesson.getStudents().contains(person)) {
                 schedule.getAllLesson().add(lesson);
@@ -125,6 +129,7 @@ public class University {
         } else if (lesson.getLecturer().equals(person)) {
             schedule.getAllLesson().add(lesson);
         }
+        return schedule;
     }
 
     public ArrayList<Student> getStudents() {

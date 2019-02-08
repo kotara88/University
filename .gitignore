@@ -2,3 +2,4 @@ university.mdj
 target
 .idea
 university.iml
+src\main\java\com\foxminded\university\domain\main.java

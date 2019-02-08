@@ -6,29 +6,27 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LessonTest {
-    private Student student;
+    private Student firstStudent;
+    private Student secondStudent;
     private Lesson lesson;
 
     @Before
     public void initialize(){
-        student = new Student("Patrick", "Kluivert", 22, "VM-41");
+        firstStudent = new Student("Patrick", "Kluivert", 22, "VM-41");
+        secondStudent = new Student("Patrick", "Kluivert", 22, "VM-41");
         lesson = new Lesson();
+        lesson.getStudents().add(secondStudent);
     }
 
     @Test
     public void mustAddStudentIntoStudentList(){
-        lesson.addStudent(student);
-        int expected = 1;
-        int actual = lesson.getStudents().size();
-        assertEquals(expected, actual);
+        lesson.addStudent(firstStudent);
+        assertTrue(lesson.getStudents().contains(firstStudent));
     }
 
     @Test
     public void mustRemoveStudentFromStudentList(){
-        lesson.addStudent(student);
-        lesson.removeStudent(student);
-        int expected = 0;
-        int actual = lesson.getStudents().size();
-        assertEquals(expected, actual);
+        lesson.removeStudent(secondStudent);
+        assertFalse(lesson.getStudents().contains(secondStudent));
     }
 }

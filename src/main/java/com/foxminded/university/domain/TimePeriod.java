@@ -1,26 +1,15 @@
 package com.foxminded.university.domain;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TimePeriod {
+    private static final String TIME_PATTERN = "dd-MM-yyyy hh:mm";
     private Date startTime;
     private Date endTine;
 
     public TimePeriod(Date startTime, Date endTine) {
         this.startTime = startTime;
         this.endTine = endTine;
-    }
-
-    public TimePeriod(String startTime, String endTine) {
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        try {
-           this.startTime = format.parse(startTime);
-           this.endTine = format.parse(endTine);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException("Invalid date format");
-        }
     }
 
     public Date getStartTime() {

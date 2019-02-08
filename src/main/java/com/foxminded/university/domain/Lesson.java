@@ -21,14 +21,6 @@ public class Lesson {
         this.students = new ArrayList<Student>();
     }
 
-    public Lesson(String subject, String classroom, Lecturer lecturer, String startTime, String endTime) {
-        this.subject = subject;
-        this.classroom = classroom;
-        this.lecturer = lecturer;
-        this.timePeriod = new TimePeriod(startTime, endTime);
-        this.students = new ArrayList<Student>();
-    }
-
     public void addStudent(Student student) {
         students.add(student);
     }
