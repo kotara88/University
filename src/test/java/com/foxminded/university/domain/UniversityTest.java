@@ -26,6 +26,7 @@ public class UniversityTest {
     private Lecturer foreignLanguagesLecturer;
     private Lecturer searchingLecturer;
     private Lecturer notExistedLecturer;
+    private Lecturer lecturerThatHaveNoScheduledLessons;
 
     private Lesson mathLesson;
     private Lesson programmingLesson;
@@ -177,9 +178,14 @@ public class UniversityTest {
     }
 
     @Test
-    public void mustRemoveLecturerFromLecturerList() {
-        university.sackLecturer(programmingLecturer);
-        assertFalse(university.getLecturers().contains(programmingLecturer));
+    public void mustRemoveLecturerFromLecturerList_whenLecturerHasNoScheduledLessons() {
+        university.sackLecturer(lecturerThatHaveNoScheduledLessons);
+        assertFalse(university.getLecturers().contains(lecturerThatHaveNoScheduledLessons));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mustThrowIllegalArgumentException_WhenLecturerHasScheduledLessons() {
+        university.sackLecturer(mathLecturer);
     }
 
     @Test

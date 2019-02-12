@@ -52,7 +52,7 @@ public class University {
     public void sackLecturer(Lecturer lecturer) {
         for (Lesson lesson : new ArrayList<Lesson>(lessons)) {
             if (lesson.getLecturer().equals(lecturer)) {
-                lessons.remove(lesson);
+                throw new IllegalArgumentException("The sacking lecturer has scheduled lectures");
             }
         }
         lecturers.remove(lecturer);
