@@ -3,6 +3,7 @@ package com.foxminded.university.domain;
 import java.util.ArrayList;
 
 public class Lesson {
+    private long id;
     private String subject;
     private String classroom;
     private Lecturer lecturer;
@@ -21,12 +22,25 @@ public class Lesson {
         this.students = new ArrayList<Student>();
     }
 
+    public Lesson(long id, String subject, String classroom, Lecturer lecturer, TimePeriod timePeriod) {
+        this.id = id;
+        this.subject = subject;
+        this.classroom = classroom;
+        this.lecturer = lecturer;
+        this.timePeriod = timePeriod;
+        this.students = new ArrayList<Student>();
+    }
+
     public void addStudent(Student student) {
         students.add(student);
     }
 
     public void removeStudent(Student student) {
         students.remove(student);
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getSubject() {
@@ -49,6 +63,10 @@ public class Lesson {
         return timePeriod;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setSubject(String subject) {
         this.subject = subject;
     }
@@ -59,6 +77,10 @@ public class Lesson {
 
     public void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
     }
 
     public void setTimePeriod(TimePeriod timePeriod) {

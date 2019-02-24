@@ -11,6 +11,11 @@ public class Lecturer extends Person{
         this.department = department;
     }
 
+    public Lecturer(long id, String name, String lastName, int age, String department) {
+        super(id, name, lastName, age);
+        this.department = department;
+    }
+
     public String getDepartment() {
         return department;
     }

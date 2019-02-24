@@ -2,21 +2,26 @@ package com.foxminded.university.domain;
 
 public class Student extends Person {
 
-    private String group;
+    private String studentGroup;
 
     public Student(){}
 
-    public Student(String name, String lastName, int age, String group) {
+    public Student(String name, String lastName, int age, String studentGroup) {
         super(name, lastName, age);
-        this.group = group;
+        this.studentGroup = studentGroup;
     }
 
-    public String getGroup() {
-        return group;
+    public Student(long id, String name, String lastName, int age, String studentGroup) {
+        super(id, name, lastName, age);
+        this.studentGroup = studentGroup;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public String getStudentGroup() {
+        return studentGroup;
+    }
+
+    public void setStudentGroup(String studentGroup) {
+        this.studentGroup = studentGroup;
     }
 
     @Override
@@ -27,13 +32,13 @@ public class Student extends Person {
 
         Student student = (Student) o;
 
-        return group != null ? group.equals(student.group) : student.group == null;
+        return studentGroup != null ? studentGroup.equals(student.studentGroup) : student.studentGroup == null;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + (studentGroup != null ? studentGroup.hashCode() : 0);
         return result;
     }
 }

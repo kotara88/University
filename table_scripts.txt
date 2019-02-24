@@ -1,0 +1,39 @@
+CREATE TABLE lecturers(
+	id serial PRIMARY KEY,
+	first_name varchar(20) NOT NULL,
+	last_name varchar(20) NOT NULL,
+	age integer NOT NULL,
+	department varchar(50) NOT NULL);
+	
+CREATE TABLE students(
+	id serial PRIMARY KEY,
+	first_name varchar(20) NOT NULL,
+	last_name varchar(20) NOT NULL,
+	age integer NOT NULL,
+	student_group varchar(10) NOT NULL);
+	
+CREATE TABLE time_period(
+	id serial PRIMARY KEY,
+	start_time timestamp NOT NULL,
+	end_time timestamp  NOT NULL);
+	
+CREATE TABLE lessons(
+	id serial PRIMARY KEY,
+	subject varchar(50) NOT NULL,
+	classroom varchar(10) NOT NULL,
+	lecturer_id integer REFERENCES lecturers(id));
+	timePeriod_id integer REFERENCES time_period(id));
+
+CREATE TABLE lesson_student(
+	lesson_id integer REFERENCES lessons(id),
+	student_id integer REFERENCES students(id),
+	CONSTRAINT pk PRIMARY KEY (lesson_id, student_id)); 
+	
+	
+// get info about a lesson
+SELECT l.subject, l.classroom, lec.first_name, lec.last_name, t.start_time, t.end_time
+FROM Lessons l INNER JOIN lecturers lec
+ON l.lecturer_id = lec.id
+INNER JOIN time_period t
+ON l.time_period_id = t.id;
+

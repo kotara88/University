@@ -3,21 +3,46 @@ package com.foxminded.university.domain;
 import java.util.Date;
 
 public class TimePeriod {
-    private static final String TIME_PATTERN = "dd-MM-yyyy hh:mm";
+    private long id;
     private Date startTime;
-    private Date endTine;
+    private Date endTime;
 
-    public TimePeriod(Date startTime, Date endTine) {
+    public TimePeriod() {
+    }
+
+    public TimePeriod(Date startTime, Date endTime) {
         this.startTime = startTime;
-        this.endTine = endTine;
+        this.endTime = endTime;
+    }
+
+    public TimePeriod(long id, Date startTime, Date endTime) {
+        this.id = id;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Date getStartTime() {
         return startTime;
     }
 
-    public Date getEndTine() {
-        return endTine;
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 
     @Override
@@ -28,7 +53,7 @@ public class TimePeriod {
         TimePeriod that = (TimePeriod) o;
 
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
-        return endTine != null ? endTine.equals(that.endTine) : that.endTine == null;
+        return endTime != null ? endTime.equals(that.endTime) : that.endTime == null;
     }
 
     @Override

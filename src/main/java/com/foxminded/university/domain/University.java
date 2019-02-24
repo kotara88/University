@@ -108,7 +108,7 @@ public class University {
 
     public Schedule getSchedule(TimePeriod timePeriod, Person person) {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(timePeriod.getEndTine());
+        calendar.setTime(timePeriod.getEndTime());
         calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1);
         Date endTimePeriod = calendar.getTime();
         Schedule schedule = new Schedule();
