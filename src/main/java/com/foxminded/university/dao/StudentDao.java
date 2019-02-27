@@ -12,7 +12,10 @@ public class StudentDao {
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            setStudent(statement, student);
+            statement.setString(1, student.getName());
+            statement.setString(2, student.getLastName());
+            statement.setInt(3, student.getAge());
+            statement.setString(4, student.getStudentGroup());
             statement.execute();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()){
@@ -30,20 +33,16 @@ public class StudentDao {
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            setStudent(statement, student);
+            statement.setString(1, student.getName());
+            statement.setString(2, student.getLastName());
+            statement.setInt(3, student.getAge());
+            statement.setString(4, student.getStudentGroup());
             statement.setLong(5, student.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return student;
-    }
-
-    private void setStudent(PreparedStatement statement, Student student) throws SQLException {
-        statement.setString(1, student.getName());
-        statement.setString(2, student.getLastName());
-        statement.setInt(3, student.getAge());
-        statement.setString(4, student.getStudentGroup());
     }
 
     public void delete(long id) {
@@ -72,7 +71,6 @@ public class StudentDao {
         }
         return null;
     }
-
 
     public ArrayList<Student> getAll() {
         ArrayList<Student> students = new ArrayList<>();

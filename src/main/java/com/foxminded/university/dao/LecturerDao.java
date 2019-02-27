@@ -12,7 +12,10 @@ public class LecturerDao {
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            setLecturer(statement, lecturer);
+            statement.setString(1, lecturer.getName());
+            statement.setString(2, lecturer.getLastName());
+            statement.setInt(3, lecturer.getAge());
+            statement.setString(4, lecturer.getDepartment());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()){
@@ -30,20 +33,16 @@ public class LecturerDao {
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            setLecturer(statement, lecturer);
+            statement.setString(1, lecturer.getName());
+            statement.setString(2, lecturer.getLastName());
+            statement.setInt(3, lecturer.getAge());
+            statement.setString(4, lecturer.getDepartment());
             statement.setLong(5, lecturer.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return lecturer;
-    }
-
-    private void setLecturer(PreparedStatement statement, Lecturer lecturer) throws SQLException {
-        statement.setString(1, lecturer.getName());
-        statement.setString(2, lecturer.getLastName());
-        statement.setInt(3, lecturer.getAge());
-        statement.setString(4, lecturer.getDepartment());
     }
 
     public void delete(long id) {

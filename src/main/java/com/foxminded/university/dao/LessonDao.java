@@ -2,22 +2,27 @@ package com.foxminded.university.dao;
 
 import com.foxminded.university.domain.Lesson;
 import com.foxminded.university.domain.Student;
+import com.foxminded.university.domain.TimePeriod;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class LessonDao {
     public Lesson insert(Lesson lesson) {
-        String query = "INSERT INTO lessons (subject, classroom, lecturer_id, time_period_id) VALUES (?, ?, ?, ?);";
+        String query = "INSERT INTO lessons (subject, classroom, lecturer_id, start_time, end_time) VALUES (?, ?, ?, ?, ?);";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            TimePeriodDao timePeriodDao = new TimePeriodDao();
-            lesson.setTimePeriod(timePeriodDao.insert(lesson.getTimePeriod()));
+
+            Timestamp startTime = new Timestamp(lesson.getTimePeriod().getStartTime().getTime());
+            Timestamp endTime = new Timestamp(lesson.getTimePeriod().getEndTime().getTime());
+
             statement.setString(1, lesson.getSubject());
             statement.setString(2, lesson.getClassroom());
             statement.setLong(3, lesson.getLecturer().getId());
-            statement.setLong(4, lesson.getTimePeriod().getId());
+            statement.setTimestamp(4, startTime);
+            statement.setTimestamp(5, endTime);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -36,31 +41,30 @@ public class LessonDao {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             for (Student student : lesson.getStudents()) {
-                setStatementForStudent(statement, lesson.getId(), student.getId());
+                statement.setLong(1, lesson.getId());
+                statement.setLong(2, student.getId());
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void setStatementForStudent(PreparedStatement statement, long id, long secondId) throws SQLException {
-        statement.setLong(1, id);
-        statement.setLong(2, secondId);
-        statement.executeUpdate();
-    }
-
     public Lesson update(Lesson lesson) {
-        String query = "UPDATE lessons SET subject = ?, classroom = ?, lecturer_id = ?, time_period_id = ? WHERE id = ?;";
+        String query = "UPDATE lessons SET subject = ?, classroom = ?, lecturer_id = ?, start_time = ?, end_time = ? WHERE id = ?;";
 
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            TimePeriodDao timePeriodDao = new TimePeriodDao();
-            timePeriodDao.update(lesson.getTimePeriod());
+
             statement.setString(1, lesson.getSubject());
             statement.setString(2, lesson.getClassroom());
             statement.setLong(3, lesson.getLecturer().getId());
-            statement.setLong(4, lesson.getTimePeriod().getId());
-            statement.setLong(5, lesson.getId());
+
+            Timestamp startTime = new Timestamp(lesson.getTimePeriod().getStartTime().getTime());
+            Timestamp endTime = new Timestamp(lesson.getTimePeriod().getEndTime().getTime());
+            statement.setTimestamp(4, startTime);
+            statement.setTimestamp(5, endTime);
+            statement.setLong(6, lesson.getId());
             statement.executeUpdate();
             updateAllStudents(lesson);
         } catch (SQLException e) {
@@ -75,7 +79,9 @@ public class LessonDao {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             for (Student student : lesson.getStudents()) {
-                setStatementForStudent(statement, student.getId(), lesson.getId());
+                statement.setLong(1, student.getId());
+                statement.setLong(2, lesson.getId());
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,20 +95,17 @@ public class LessonDao {
             deleteAllStudents(lesson);
             statement.setLong(1, lesson.getId());
             statement.executeUpdate();
-            TimePeriodDao timePeriodDao = new TimePeriodDao();
-            timePeriodDao.delete(lesson.getTimePeriod().getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     private void deleteAllStudents(Lesson lesson) {
-        String query = "DELETE FROM lesson_student WHERE lesson_id = ? AND student_id = ?;";
+        String query = "DELETE FROM lesson_student WHERE lesson_id = ?;";
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-            for (Student student : lesson.getStudents()) {
-                setStatementForStudent(statement, lesson.getId(),student.getId() );
-            }
+                statement.setLong(1, lesson.getId());
+                statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,14 +120,18 @@ public class LessonDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 Lesson lesson = new Lesson();
                 LecturerDao lecturerDao = new LecturerDao();
-                TimePeriodDao timePeriodDao = new TimePeriodDao();
+
                 if (resultSet.next()) {
-                    lesson.setId(resultSet.getLong(1));
-                    lesson.setSubject(resultSet.getString(2));
-                    lesson.setClassroom(resultSet.getString(3));
-                    lesson.setLecturer(lecturerDao.getById(resultSet.getLong(4)));
+                    lesson.setId(resultSet.getLong("id"));
+                    lesson.setSubject(resultSet.getString("subject"));
+                    lesson.setClassroom(resultSet.getString("classroom"));
+                    lesson.setLecturer(lecturerDao.getById(resultSet.getLong("lecturer_id")));
                     lesson.setStudents(getAllStudents(lesson));
-                    lesson.setTimePeriod(timePeriodDao.getById(id));
+
+                    Date startTime = resultSet.getTimestamp("start_time");
+                    Date endTime = resultSet.getTimestamp("end_time");
+                    lesson.setTimePeriod(new TimePeriod(startTime, endTime));
+                    return lesson;
                 }
             }
         } catch (SQLException e) {
@@ -142,7 +149,7 @@ public class LessonDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 StudentDao studentDao = new StudentDao();
                 while (resultSet.next()) {
-                    Student student = studentDao.getById(resultSet.getLong(1));
+                    Student student = studentDao.getById(resultSet.getLong("student_id"));
                     students.add(student);
                 }
             }
@@ -153,5 +160,31 @@ public class LessonDao {
         return null;
     }
 
+    public ArrayList<Lesson> getAllLessons() {
+        String query = "SELECT * FROM lessons;";
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                LecturerDao lecturerDao = new LecturerDao();
+                while (resultSet.next()) {
+                    Lesson lesson = new Lesson();
+                    lesson.setId(resultSet.getLong("id"));
+                    lesson.setSubject(resultSet.getString("subject"));
+                    lesson.setClassroom(resultSet.getString("classroom"));
+                    lesson.setLecturer(lecturerDao.getById(resultSet.getLong("lecturer_id")));
+                    lesson.setStudents(getAllStudents(lesson));
 
+                    Date startTime = resultSet.getTimestamp("start_time");
+                    Date endTime = resultSet.getTimestamp("end_time");
+                    lesson.setTimePeriod(new TimePeriod(startTime, endTime));
+
+                    lessons.add(lesson);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lessons;
+    }
 }
