@@ -143,4 +143,16 @@ public class University {
     public ArrayList<Lesson> getLessons() {
         return lessons;
     }
+
+    public void setStudents(ArrayList<Student> students) {
+        this.students = students;
+    }
+
+    public void setLecturers(ArrayList<Lecturer> lecturers) {
+        this.lecturers = lecturers;
+    }
+
+    public void setLessons(ArrayList<Lesson> lessons) {
+        this.lessons = lessons;
+    }
 }

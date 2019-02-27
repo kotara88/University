@@ -45,10 +45,10 @@ public class LecturerDao {
         return lecturer;
     }
 
-    public void delete(long id) {
+    public void delete(Lecturer lecturer) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement("DELETE FROM lecturers WHERE id = ?;")) {
-            statement.setLong(1, id);
+            statement.setLong(1, lecturer.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
