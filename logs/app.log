@@ -1,0 +1,4 @@
+2019-03-16 13:26:10,325 main INFO  dao.StudentDao - Insert student Patrick Kluivert
+2019-03-16 13:27:06,837 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-03-16 13:28:19,004 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-03-16 13:29:13,114 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
