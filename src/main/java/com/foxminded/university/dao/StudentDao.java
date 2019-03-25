@@ -27,14 +27,17 @@ public class StudentDao {
             statement.execute();
             log.trace("Get generated key");
             ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            student.setId(resultSet.getLong("id"));
-            log.trace("Return inserted student");
-            return student;
+            if (resultSet.next()) {
+                log.debug("Set student id");
+                student.setId(resultSet.getLong("id"));
+                log.trace("Return inserted student");
+                return student;
+            }
         } catch (SQLException e) {
-            log.error("Couldn't insert student");
+            log.error("Couldn't insert student", e);
             throw new DaoException("Couldn't insert student", e);
         }
+        return null;
     }
 
     public Student update(Student student) throws DaoException {
@@ -54,7 +57,7 @@ public class StudentDao {
             log.trace("Return updated student");
             return student;
         } catch (SQLException e) {
-            log.error("Couldn't update student");
+            log.error("Couldn't update student", e);
             throw new DaoException("Couldn't update student", e);
         }
     }
@@ -68,7 +71,7 @@ public class StudentDao {
             log.debug("Execute statement");
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Can't delete student");
+            log.error("Can't delete student", e);
             throw new DaoException("Can't delete student", e);
         }
     }
@@ -86,8 +89,8 @@ public class StudentDao {
                 return student;
             }
         } catch (SQLException e) {
-            log.error("Couldn't get student {}", id);
-            throw new DaoException("Couldn't get student", e);
+            log.error("Couldn't get student {}", id, e);
+            throw new DaoException("Couldn't get student " + id, e);
         }
     }
 
@@ -107,7 +110,7 @@ public class StudentDao {
             log.trace("Return list of students");
             return students;
         } catch (SQLException e) {
-            log.error("Couldn't get list of students");
+            log.error("Couldn't get list of students", e);
             throw new DaoException("Couldn't get list of students", e);
         }
     }
@@ -115,18 +118,21 @@ public class StudentDao {
     private Student extractStudentFromResultSet(ResultSet resultSet) throws DaoException {
         log.info("Extract student from result set");
         try {
-            Student student = new Student();
-            log.trace("Set student");
-            student.setId(resultSet.getLong("id"));
-            student.setName(resultSet.getString("first_name"));
-            student.setLastName(resultSet.getString("last_name"));
-            student.setAge(resultSet.getInt("age"));
-            student.setStudentGroup(resultSet.getString("student_group"));
-            log.trace("Return extracted student");
-            return student;
+            if (resultSet.next()){
+                Student student = new Student();
+                log.debug("Set student");
+                student.setId(resultSet.getLong("id"));
+                student.setName(resultSet.getString("first_name"));
+                student.setLastName(resultSet.getString("last_name"));
+                student.setAge(resultSet.getInt("age"));
+                student.setStudentGroup(resultSet.getString("student_group"));
+                log.trace("Return extracted student");
+                return student;
+            }
         } catch (SQLException e) {
-            log.error("Couldn't extract student from result set");
+            log.error("Couldn't extract student from result set", e);
             throw new DaoException("Couldn't extract student from resultSet", e);
         }
+        return null;
     }
 }

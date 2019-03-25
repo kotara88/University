@@ -33,15 +33,18 @@ public class LessonDao {
             statement.executeUpdate();
             log.trace("Get generated key");
             ResultSet resultSet = statement.getGeneratedKeys();
-            resultSet.next();
-            lesson.setId(resultSet.getLong("id"));
-            insertAllStudents(lesson);
-            log.trace("Return inserted lesson");
-            return lesson;
+            if (resultSet.next()) {
+                log.debug("Set inserted lesson id");
+                lesson.setId(resultSet.getLong("id"));
+                insertAllStudents(lesson);
+                log.trace("Return inserted lesson");
+                return lesson;
+            }
         } catch (SQLException e) {
-            log.error("Couldn't insert lesson {} {}", lesson.getSubject(), lesson.getTimePeriod().getStartTime());
+            log.error("Couldn't insert lesson {} {}", lesson.getSubject(), lesson.getTimePeriod().getStartTime(), e);
             throw new DaoException("Could't insert lesson", e);
         }
+        return null;
     }
 
     private void insertAllStudents(Lesson lesson) throws DaoException {
@@ -88,7 +91,7 @@ public class LessonDao {
             log.trace("Return updated lesson");
             return lesson;
         } catch (SQLException e) {
-            log.error("Could't update lesson");
+            log.error("Could't update lesson", e);
             throw new DaoException("Could't update lesson", e);
         }
 
@@ -126,7 +129,7 @@ public class LessonDao {
             log.debug("Execute statement");
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Could't delete  lesson id = {}", lesson.getId());
+            log.error("Could't delete  lesson id = {}", lesson.getId(), e);
             throw new DaoException("Could't delete lesson", e);
         }
     }
@@ -143,7 +146,7 @@ public class LessonDao {
             log.debug("Execute statement");
             statement.executeUpdate();
         } catch (SQLException e) {
-            log.error("Could't delete lesson's list of students");
+            log.error("Could't delete lesson's list of students", e);
             throw new DaoException("Can't delete all students for lesson", e);
         }
     }
@@ -158,25 +161,28 @@ public class LessonDao {
             statement.setLong(1, id);
             log.trace("Execute statement and get result set");
             try (ResultSet resultSet = statement.executeQuery()) {
-                Lesson lesson = new Lesson();
-                LecturerDao lecturerDao = new LecturerDao();
-                log.trace("Set lesson");
-                lesson.setId(resultSet.getLong("id"));
-                lesson.setSubject(resultSet.getString("subject"));
-                lesson.setClassroom(resultSet.getString("classroom"));
-                lesson.setLecturer(lecturerDao.getById(resultSet.getLong("lecturer_id")));
-                lesson.setStudents(getAllStudents(lesson));
+                if (resultSet.next()){
+                    Lesson lesson = new Lesson();
+                    LecturerDao lecturerDao = new LecturerDao();
+                    log.debug("Set lesson");
+                    lesson.setId(resultSet.getLong("id"));
+                    lesson.setSubject(resultSet.getString("subject"));
+                    lesson.setClassroom(resultSet.getString("classroom"));
+                    lesson.setLecturer(lecturerDao.getById(resultSet.getLong("lecturer_id")));
+                    lesson.setStudents(getAllStudents(lesson));
 
-                Date startTime = resultSet.getTimestamp("start_time");
-                Date endTime = resultSet.getTimestamp("end_time");
-                lesson.setTimePeriod(new TimePeriod(startTime, endTime));
-                log.trace("Return lesson");
-                return lesson;
+                    Date startTime = resultSet.getTimestamp("start_time");
+                    Date endTime = resultSet.getTimestamp("end_time");
+                    lesson.setTimePeriod(new TimePeriod(startTime, endTime));
+                    log.trace("Return lesson");
+                    return lesson;
+                }
             }
         } catch (SQLException e) {
-            log.error("Could't get lesson id = {}", id);
+            log.error("Could't get lesson id = {}", id, e);
             throw new DaoException("Could't get lesson id = " + id, e);
         }
+        return null;
     }
 
     private ArrayList<Student> getAllStudents(Lesson lesson) throws DaoException {
@@ -200,7 +206,7 @@ public class LessonDao {
             log.trace("Return student");
             return students;
         } catch (SQLException e) {
-            log.error("Could't get lesson's list of students");
+            log.error("Could't get lesson's list of students", e);
             throw new DaoException("Could't get all students for lesson", e);
         }
     }
@@ -216,7 +222,7 @@ public class LessonDao {
             try (ResultSet resultSet = statement.executeQuery()) {
                 LecturerDao lecturerDao = new LecturerDao();
                 while (resultSet.next()) {
-                    log.trace("Set lesson");
+                    log.debug("Set lesson");
                     Lesson lesson = new Lesson();
                     lesson.setId(resultSet.getLong("id"));
                     lesson.setSubject(resultSet.getString("subject"));
@@ -233,7 +239,7 @@ public class LessonDao {
                 return lessons;
             }
         } catch (SQLException e) {
-            log.error("Could't get list of all lessons");
+            log.error("Could't get list of all lessons", e);
             throw new DaoException("Can't get all lesson", e);
         }
     }

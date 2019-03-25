@@ -1,6 +1,6 @@
 package com.foxminded.university.domain;
 
-abstract class Person {
+public abstract class Person {
 
     private long id;
     private String name;
