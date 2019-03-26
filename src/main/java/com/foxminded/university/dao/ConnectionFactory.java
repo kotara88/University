@@ -24,10 +24,10 @@ public class ConnectionFactory {
             Class.forName(DB_DRIVER_CLASS);
             return DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (ClassNotFoundException e) {
-            log.error("Couldn't load database driver");
+            log.error("Couldn't load database driver", e);
             throw new DaoException("Couldn't load database driver", e);
         } catch (SQLException e) {
-            log.error("Couldn't get connection to database");
+            log.error("Couldn't get connection to database", e);
             throw new DaoException("Couldn't get connection to database", e);
         }
     }
