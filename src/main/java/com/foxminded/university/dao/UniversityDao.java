@@ -93,7 +93,7 @@ public class UniversityDao {
         university.setStudents(studentDao.getAll());
 
         LessonDao lessonDao = new LessonDao();
-        university.setLessons(lessonDao.getAllLessons());
+        university.setLessons(lessonDao.getAll());
 
         log.info("Return university");
         return university;

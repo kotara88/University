@@ -2,3 +2,140 @@
 2019-03-16 13:27:06,837 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
 2019-03-16 13:28:19,004 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
 2019-03-16 13:29:13,114 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-04-05 23:39:04,519 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-04-05 23:39:04,731 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Jack Nicholson
+2019-04-05 23:39:04,848 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Marlon Brando
+2019-04-05 23:39:04,917 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Tom Hanks
+2019-04-05 23:39:04,987 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Denzel!!! Washington
+2019-04-05 23:39:05,048 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Morgan Freeman
+2019-04-05 23:40:57,917 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Mathematics 2019-01-04T08:00:00.000+0300
+2019-04-05 23:40:58,096 ERROR [main] dao.LessonDao (LessonDao.java:44) - Couldn't insert lesson Mathematics 2019-01-04T08:00:00.000+0300
+org.postgresql.util.PSQLException: ERROR: insert or update on table "lessons" violates foreign key constraint "lessons_lecturer_id_fkey"
+  Подробности: Key (lecturer_id)=(0) is not present in table "lecturers".
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2440) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2183) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:308) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:441) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:365) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:143) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:120) ~[postgresql-42.2.5.jar:42.2.5]
+	at com.foxminded.university.dao.LessonDao.insert(LessonDao.java:33) [classes/:?]
+	at com.foxminded.university.dao.Main.main(Main.java:54) [classes/:?]
+2019-04-05 23:43:50,245 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-04-05 23:43:50,417 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Jack Nicholson
+2019-04-05 23:43:50,475 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Marlon Brando
+2019-04-05 23:43:50,536 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Tom Hanks
+2019-04-05 23:43:50,608 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Denzel Washington
+2019-04-05 23:43:50,721 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Morgan Freeman
+2019-04-05 23:43:50,776 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Programming Languages 2019-01-04T09:45:00.000+0300
+2019-04-05 23:43:50,841 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-05 23:43:51,003 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Discrete mathematics 2019-01-05T08:00:00.000+0300
+2019-04-05 23:43:51,080 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-05 23:43:51,297 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Mathematics 2019-01-04T08:00:00.000+0300
+2019-04-05 23:43:51,349 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-05 23:43:51,453 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson English 2019-01-04T11:30:00.000+0300
+2019-04-05 23:43:51,502 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:33:51,590 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-04-06 23:33:51,784 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Jack Nicholson
+2019-04-06 23:33:51,862 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Marlon Brando
+2019-04-06 23:33:51,982 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Tom Hanks
+2019-04-06 23:33:52,114 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Denzel Washington
+2019-04-06 23:33:52,309 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Morgan Freeman
+2019-04-06 23:33:52,446 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Programming Languages 2019-01-04T09:45:00.000+0300
+2019-04-06 23:33:52,517 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:33:52,704 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Discrete mathematics 2019-01-05T08:00:00.000+0300
+2019-04-06 23:33:52,777 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:33:52,945 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Mathematics 2019-01-04T08:00:00.000+0300
+2019-04-06 23:33:53,000 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:33:53,099 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson English 2019-01-04T11:30:00.000+0300
+2019-04-06 23:33:53,176 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:38:15,108 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Patrick Kluivert
+2019-04-06 23:38:15,264 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Jack Nicholson
+2019-04-06 23:38:15,312 INFO  [main] dao.StudentDao (StudentDao.java:15) - Insert student Marlon Brando
+2019-04-06 23:38:15,398 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Tom Hanks
+2019-04-06 23:38:15,475 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Denzel Washington
+2019-04-06 23:38:15,567 INFO  [main] dao.LecturerDao (LecturerDao.java:14) - Insert lecturer Morgan Freeman
+2019-04-06 23:38:15,650 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Mathematics 2019-01-04T08:00:00.000+0300
+2019-04-06 23:38:15,720 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:38:15,848 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Programming Languages 2019-01-04T09:45:00.000+0300
+2019-04-06 23:38:15,914 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:38:16,028 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson English 2019-01-04T11:30:00.000+0300
+2019-04-06 23:38:16,117 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-06 23:38:16,220 INFO  [main] dao.LessonDao (LessonDao.java:17) - Insert lesson Discrete mathematics 2019-01-05T08:00:00.000+0300
+2019-04-06 23:38:16,266 INFO  [main] dao.LessonDao (LessonDao.java:51) - Insert lesson's list of students
+2019-04-07 00:03:29,659 INFO  [main] dao.StudentDao (StudentDao.java:98) - Get list of all students
+2019-04-07 00:03:29,816 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:03:29,818 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:06:31,493 INFO  [main] dao.StudentDao (StudentDao.java:98) - Get list of all students
+2019-04-07 00:06:31,661 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:06:31,663 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:09:32,528 INFO  [main] dao.StudentDao (StudentDao.java:98) - Get list of all students
+2019-04-07 00:11:40,462 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:13:32,814 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:13:42,755 INFO  [main] dao.StudentDao (StudentDao.java:98) - Get list of all students
+2019-04-07 00:13:42,926 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:13:42,928 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:13:42,929 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:47:35,478 INFO  [main] dao.LessonDao (LessonDao.java:215) - Get list of all lessons
+2019-04-07 00:47:35,625 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 4
+2019-04-07 00:47:35,672 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 00:47:35,674 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 00:47:35,748 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 4
+2019-04-07 00:47:35,806 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 00:47:35,819 ERROR [main] dao.StudentDao (StudentDao.java:131) - Couldn't extract student from result set
+org.postgresql.util.PSQLException: ResultSet not positioned properly, perhaps you need to call next.
+	at org.postgresql.jdbc.PgResultSet.checkResultSet(PgResultSet.java:2772) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgResultSet.getLong(PgResultSet.java:2078) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgResultSet.getLong(PgResultSet.java:2489) ~[postgresql-42.2.5.jar:42.2.5]
+	at com.foxminded.university.dao.StudentDao.extractStudentFromResultSet(StudentDao.java:123) [classes/:?]
+	at com.foxminded.university.dao.StudentDao.getById(StudentDao.java:88) [classes/:?]
+	at com.foxminded.university.dao.LessonDao.getAllStudents(LessonDao.java:202) [classes/:?]
+	at com.foxminded.university.dao.LessonDao.getAll(LessonDao.java:231) [classes/:?]
+	at com.foxminded.university.dao.Main.main(Main.java:56) [classes/:?]
+2019-04-07 09:29:30,262 INFO  [main] dao.LessonDao (LessonDao.java:215) - Get list of all lessons
+2019-04-07 09:29:30,460 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 4
+2019-04-07 09:29:30,562 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 09:29:30,566 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 09:29:30,625 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 4
+2019-04-07 09:29:30,703 INFO  [main] dao.StudentDao (StudentDao.java:119) - Extract student from result set
+2019-04-07 09:29:30,709 ERROR [main] dao.StudentDao (StudentDao.java:131) - Couldn't extract student from result set
+org.postgresql.util.PSQLException: ResultSet not positioned properly, perhaps you need to call next.
+	at org.postgresql.jdbc.PgResultSet.checkResultSet(PgResultSet.java:2772) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgResultSet.getLong(PgResultSet.java:2078) ~[postgresql-42.2.5.jar:42.2.5]
+	at org.postgresql.jdbc.PgResultSet.getLong(PgResultSet.java:2489) ~[postgresql-42.2.5.jar:42.2.5]
+	at com.foxminded.university.dao.StudentDao.extractStudentFromResultSet(StudentDao.java:123) [classes/:?]
+	at com.foxminded.university.dao.StudentDao.getById(StudentDao.java:88) [classes/:?]
+	at com.foxminded.university.dao.LessonDao.getAllStudents(LessonDao.java:202) [classes/:?]
+	at com.foxminded.university.dao.LessonDao.getAll(LessonDao.java:231) [classes/:?]
+	at com.foxminded.university.dao.Main.main(Main.java:56) [classes/:?]
+2019-04-07 09:35:34,356 INFO  [main] dao.LessonDao (LessonDao.java:215) - Get list of all lessons
+2019-04-07 09:35:34,521 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 4
+2019-04-07 09:35:34,576 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 09:35:34,579 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 09:35:34,636 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 4
+2019-04-07 09:35:34,709 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:34,711 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 5
+2019-04-07 09:35:34,843 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:34,849 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 5
+2019-04-07 09:35:34,921 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 09:35:34,921 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 09:35:34,978 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 4
+2019-04-07 09:35:35,027 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,028 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 5
+2019-04-07 09:35:35,120 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,121 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 6
+2019-04-07 09:35:35,183 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 09:35:35,183 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 09:35:35,241 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 5
+2019-04-07 09:35:35,290 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,291 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 6
+2019-04-07 09:35:35,356 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,358 INFO  [main] dao.LecturerDao (LecturerDao.java:80) - Get lecturer by id = 4
+2019-04-07 09:35:35,424 INFO  [main] dao.LecturerDao (LecturerDao.java:121) - Extract lecturer from result set
+2019-04-07 09:35:35,425 INFO  [main] dao.LessonDao (LessonDao.java:189) - Get lesson's list of students
+2019-04-07 09:35:35,477 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 4
+2019-04-07 09:35:35,532 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,533 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 5
+2019-04-07 09:35:35,585 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set
+2019-04-07 09:35:35,586 INFO  [main] dao.StudentDao (StudentDao.java:81) - Getting student by id = 6
+2019-04-07 09:35:35,641 INFO  [main] dao.StudentDao (StudentDao.java:122) - Extract student from result set

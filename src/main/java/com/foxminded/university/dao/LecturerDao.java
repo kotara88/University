@@ -120,21 +120,18 @@ public class LecturerDao {
     private Lecturer extractLecturerFromResultSet(ResultSet resultSet) throws DaoException {
         log.info("Extract lecturer from result set");
         try {
-            if (resultSet.next()) {
-                Lecturer lecturer = new Lecturer();
-                log.debug("Set lecturer");
-                lecturer.setId(resultSet.getLong("id"));
-                lecturer.setName(resultSet.getString("first_name"));
-                lecturer.setLastName(resultSet.getString("last_name"));
-                lecturer.setAge(resultSet.getInt("age"));
-                lecturer.setDepartment(resultSet.getString("department"));
-                log.trace("Return extracted lecturer");
-                return lecturer;
-            }
+            Lecturer lecturer = new Lecturer();
+            log.debug("Set lecturer");
+            lecturer.setId(resultSet.getLong("id"));
+            lecturer.setName(resultSet.getString("first_name"));
+            lecturer.setLastName(resultSet.getString("last_name"));
+            lecturer.setAge(resultSet.getInt("age"));
+            lecturer.setDepartment(resultSet.getString("department"));
+            log.trace("Return extracted lecturer");
+            return lecturer;
         } catch (SQLException e) {
             log.error("Couldn't extract student from result set", e);
             throw new DaoException("Couldn't extract lecturer from result set", e);
         }
-        return null;
     }
 }

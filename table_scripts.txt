@@ -16,7 +16,7 @@ CREATE TABLE lessons(
 	id serial PRIMARY KEY,
 	subject varchar(50) NOT NULL,
 	classroom varchar(10) NOT NULL,
-	lecturer_id integer REFERENCES lecturers(id));
+	lecturer_id integer REFERENCES lecturers(id),
 	start_time timestamp NOT NULL,
 	end_time timestamp  NOT NULL);
 
@@ -24,10 +24,4 @@ CREATE TABLE lesson_student(
 	lesson_id integer REFERENCES lessons(id),
 	student_id integer REFERENCES students(id),
 	CONSTRAINT pk PRIMARY KEY (lesson_id, student_id)); 
-	
-	
-// get info about a lessons
-SELECT l.subject, l.classroom, lec.first_name, lec.last_name, l.start_time, l.end_time
-FROM Lessons l INNER JOIN lecturers lec
-ON l.lecturer_id = lec.id;
 

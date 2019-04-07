@@ -85,13 +85,16 @@ public class StudentDao {
             statement.setLong(1, id);
             log.debug("Execute statement and get result set");
             try (ResultSet resultSet = statement.executeQuery()) {
-                Student student = extractStudentFromResultSet(resultSet);
-                return student;
+                if (resultSet.next()){
+                    Student student = extractStudentFromResultSet(resultSet);
+                    return student;
+                }
             }
         } catch (SQLException e) {
             log.error("Couldn't get student {}", id, e);
             throw new DaoException("Couldn't get student " + id, e);
         }
+        return null;
     }
 
     public ArrayList<Student> getAll() throws DaoException {
@@ -118,21 +121,18 @@ public class StudentDao {
     private Student extractStudentFromResultSet(ResultSet resultSet) throws DaoException {
         log.info("Extract student from result set");
         try {
-            if (resultSet.next()){
-                Student student = new Student();
-                log.debug("Set student");
-                student.setId(resultSet.getLong("id"));
-                student.setName(resultSet.getString("first_name"));
-                student.setLastName(resultSet.getString("last_name"));
-                student.setAge(resultSet.getInt("age"));
-                student.setStudentGroup(resultSet.getString("student_group"));
-                log.trace("Return extracted student");
-                return student;
-            }
+            Student student = new Student();
+            log.debug("Set student");
+            student.setId(resultSet.getLong("id"));
+            student.setName(resultSet.getString("first_name"));
+            student.setLastName(resultSet.getString("last_name"));
+            student.setAge(resultSet.getInt("age"));
+            student.setStudentGroup(resultSet.getString("student_group"));
+            log.trace("Return extracted student");
+            return student;
         } catch (SQLException e) {
             log.error("Couldn't extract student from result set", e);
             throw new DaoException("Couldn't extract student from resultSet", e);
         }
-        return null;
     }
 }

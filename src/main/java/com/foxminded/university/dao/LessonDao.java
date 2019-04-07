@@ -211,7 +211,7 @@ public class LessonDao {
         }
     }
 
-    public ArrayList<Lesson> getAllLessons() throws DaoException {
+    public ArrayList<Lesson> getAll() throws DaoException {
         log.info("Get list of all lessons");
         String query = "SELECT * FROM lessons;";
         ArrayList<Lesson> lessons = new ArrayList<>();
