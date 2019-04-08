@@ -1,12 +1,10 @@
 package com.foxminded.university.controller;
 
-import com.foxminded.university.dao.DaoException;
-import com.foxminded.university.dao.LecturerDao;
-import com.foxminded.university.dao.LessonDao;
-import com.foxminded.university.dao.StudentDao;
+import com.foxminded.university.dao.*;
 import com.foxminded.university.domain.Lecturer;
 import com.foxminded.university.domain.Lesson;
 import com.foxminded.university.domain.Student;
+import com.foxminded.university.domain.University;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,12 +19,8 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Student> students = new StudentDao().getAll();
-            List<Lecturer> lecturers = new LecturerDao().getAll();
-            List<Lesson> lessons = new LessonDao().getAll();
-            request.setAttribute("liststudents", students);
-            request.setAttribute("listlecturers", lecturers);
-            request.setAttribute("listlessons", lessons);
+            University university =  new UniversityDao().getUniversity();
+            request.setAttribute("university", university);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/index.jsp");
             dispatcher.forward(request, response);
         } catch (DaoException e) {

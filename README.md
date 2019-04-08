@@ -1,0 +1,1 @@
+This project haven't finished yet. I'll add servlets, spring and hibernate soon. Now it has dao (jdbc), domain layers and index.jsp that shows all information from db (List of students, list of lecturers, schedule).

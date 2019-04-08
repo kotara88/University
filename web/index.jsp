@@ -10,10 +10,10 @@
     <title>Status page</title>
 </head>
 <body>
-<c:import url="/list"/>
+<c:import url="/main"/>
 <h1 align="center">University</h1>
 <table align="center" border="1" cellpadding="5">
-    <caption><h2>List of students</h2></caption>
+    <caption><h2>Students</h2></caption>
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -21,7 +21,7 @@
         <th>Age</th>
         <th>Student group</th>
     </tr>
-    <c:forEach var="student" items="${liststudents}">
+    <c:forEach var="student" items="${university.students}">
         <tr>
             <td>${student.id}</td>
             <td>${student.name}</td>
@@ -32,7 +32,7 @@
     </c:forEach>
 </table>
 <table align="center" border="1" cellpadding="5">
-    <caption><h2>List of lecturers</h2></caption>
+    <caption><h2>Lecturers</h2></caption>
     <tr>
         <th>ID</th>
         <th>Name</th>
@@ -40,7 +40,7 @@
         <th>Age</th>
         <th>Department</th>
     </tr>
-    <c:forEach var="lecturer" items="${listlecturers}">
+    <c:forEach var="lecturer" items="${university.lecturers}">
         <tr>
             <td>${lecturer.id}</td>
             <td>${lecturer.name}</td>
@@ -51,7 +51,7 @@
     </c:forEach>
 </table>
 <table align="center" border="1" cellpadding="5">
-    <caption><h2>List of lessons</h2></caption>
+    <caption><h2>Lessons</h2></caption>
     <tr>
         <th>ID</th>
         <th>Subject</th>
@@ -61,7 +61,7 @@
         <th>End time</th>
         <th>Students</th>
     </tr>
-    <c:forEach var="lesson" items="${listlessons}">
+    <c:forEach var="lesson" items="${university.lessons}">
         <tr>
             <td>${lesson.id}</td>
             <td>${lesson.subject}</td>
