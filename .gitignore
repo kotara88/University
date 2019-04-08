@@ -1,6 +1,7 @@
 .idea/
 logs/
 out/
+out/artifacts/university_Web_exploded/
 target/
 university.iml
 university.mdj
