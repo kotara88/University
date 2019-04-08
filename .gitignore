@@ -1,5 +1,7 @@
-university.mdj
-target
-.idea
+.idea/
+logs/
+out/
+target/
 university.iml
-src\main\java\com\foxminded\university\domain\main.java
+university.mdj
+university.png
